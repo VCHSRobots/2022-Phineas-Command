@@ -102,17 +102,36 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final int kTopMotorCanId = 1111;
-    public static final int kBottomMotorCanId = 1111;
+    public static final int kTopMotorCanId = 31;
+    public static final int kBottomMotorCanId = 32;
   }
 
   public static final class TurretConstants {
-    public final double kEncoderTicksPerDegree = (231.0 / 56.0) * (62.0 / 13.0) * 2048 * (1.0 / 360.0);
-    public final double kZeroOffsetDegrees = 88.5;
-    public final double kMinAngle = -135;
-    public final double kMaxAngle = 275;
-    public final double kMaxAngularVelocity = 500.0; // keep within 560, started at 135, was 600
-    public final double kMaxAngularAcceleration = 12000.0; // keep within 5700, started at 455
+    public static final int kTurretMotorCanId = 33;
+    public static final int kTurretEncoderCanId = 16;
+    // turntable gear ratio
+    // 13 to 62, 56 to 231, GEAR RATIO: 21.19
+    // [motor rot / turret rot]*[enc ticks / motor rot]*[turret rot / 360 degrees]
+    public static final double kEncoderTicksPerDegree = (231.0 / 56.0) * (62.0 / 13.0)
+        * CTREConstants.kTalonFXEncoderResolution * (1.0 / 360.0);
+    public static final double kZeroOffsetDegrees = 88.5;
+    public static final double kMinAngle = -135;
+    public static final double kMaxAngle = 275;
+    public static final double kMaxAngularVelocity = 500.0; // keep within 560, started at 135, was 600
+    public static final double kMaxAngularAcceleration = 12000.0; // keep within 5700, started at 455
+  }
+
+  public static final class IntakeConstants {
+    public static final int kIntakeMotorCanId = 1111;
+    public static final int kMoverMotorCanId = 1111;
+    public static final int kIntakePneumatic1 = 1111;
+    public static final int kIntakePneumatic2 = 1111;
+    public static final int kIntakeMiddleDio = 1111;
+  }
+
+  public static final class LoaderConstants {
+    public static final int kLoaderMotorCanId = 1111;
+    public static final int kLoaderDio = 1111;
   }
 
   public static final class OIConstants {

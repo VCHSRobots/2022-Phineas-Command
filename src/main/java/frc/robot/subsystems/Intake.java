@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CTREConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LoaderConstants;
-import frc.robot.subsystems.ColorSensor;
 
 public class Intake extends SubsystemBase {
 

@@ -22,8 +22,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 
 import java.util.List;
 
@@ -35,8 +39,12 @@ import java.util.List;
  */
 public class RobotContainer {
     // The robot's subsystems
+    private final Climber m_climber = new Climber();
+    private final ColorSensor m_colorSensor = new ColorSensor();
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+    private final Intake m_intake = new Intake();
     private final Shooter m_shooter = new Shooter();
+    private final Turret m_turret = new Turret();
 
     // The driver's controller
     XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -73,9 +81,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // run shooter wheels
         new JoystickButton(m_driverController, XboxController.Button.kY.value)
-            .whenActive(
-                () -> m_shooter.setSpeedsRPM(2000, 2000), 
-                m_shooter);
+                .whenActive(
+                        () -> m_shooter.setSpeedsRPM(2000, 2000),
+                        m_shooter);
     }
 
     /**

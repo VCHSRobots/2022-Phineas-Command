@@ -134,6 +134,19 @@ public final class Constants {
     public static final int kLoaderDio = 1111;
   }
 
+  public static final class ClimberConstants {
+    public static final int kClimberMotor1 = 1111;
+    public static final int kClimberMotor2 = 1111;
+    public static final int kClimberMotor3 = 1111;
+    public static final int kSolenoidForward = 111;
+    public static final int kSolenoidReverse = 111;
+    public static final int kLeftBottomLimitDio = 111;
+    public static final int kRightBottomLimitDio = 111;
+    public static final double kInchesPerEncoderTick = 0.00014573; // not used
+    public static final double kInchesPerEncoderTick_Auto = 0.0000989;
+    public static final double kSlowDownDistanceInches = 2.0;
+  }
+
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double xboxDeadband = 0.09;

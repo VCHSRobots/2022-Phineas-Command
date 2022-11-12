@@ -67,6 +67,12 @@ public class RobotContainer {
                                 m_driverController.getRightX(),
                                 false, false),
                         m_robotDrive));
+
+        m_intake.setDefaultCommand(
+                new RunCommand(
+                        () -> m_intake.changeState(false, false, false),
+                        m_intake)
+        );
     }
 
     /**
@@ -84,6 +90,25 @@ public class RobotContainer {
                 .whenActive(
                         () -> m_shooter.setSpeedsRPM(2000, 2000),
                         m_shooter);
+
+        // turn on intake
+        new JoystickButton(m_driverController, XboxController.Button.kA.value)
+                .whenPressed(
+                        () -> m_intake.changeState(true, false, false),
+                        m_intake);
+
+        // turn off intake
+        new JoystickButton(m_driverController, XboxController.Button.kB.value)
+                .whenPressed(
+                        () -> m_intake.changeState(false, true, false),
+                        m_intake);
+
+        // reverse intake
+        new JoystickButton(m_driverController, XboxController.Button.kX.value)
+                .whenPressed(
+                        () -> m_intake.changeState(false, false, true),
+                        m_intake);
+        
     }
 
     /**

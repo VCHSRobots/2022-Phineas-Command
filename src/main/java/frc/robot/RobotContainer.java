@@ -84,6 +84,10 @@ public class RobotContainer {
                 .whenActive(
                         () -> m_shooter.setSpeedsRPM(2000, 2000),
                         m_shooter);
+
+        // barf mode
+        new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
+            .whileHeld(()->m_shooter.setBarfVoltage(), m_shooter);
     }
 
     /**

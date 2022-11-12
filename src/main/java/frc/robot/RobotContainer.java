@@ -12,7 +12,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -49,6 +52,19 @@ public class RobotContainer {
     // The driver's controller
     XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
+    // Shuffleboard
+    private final NetworkTableEntry m_nt_shooterTopRpm = Shuffleboard.getTab("main")
+        .add("shooter top rpm", 0)
+        .withPosition(0, 0)
+        .withWidget(BuiltInWidgets.kTextView)
+        .getEntry();
+    private final NetworkTableEntry m_nt_shooterBottomRpm = Shuffleboard.getTab("main")
+        .add("shooter bottom rpm", 0)
+        .withPosition(0, 1)
+        .withWidget(BuiltInWidgets.kTextView)
+        .getEntry();
+
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
@@ -83,6 +99,12 @@ public class RobotContainer {
         new JoystickButton(m_driverController, XboxController.Button.kY.value)
                 .whenActive(
                         () -> m_shooter.setSpeedsRPM(2000, 2000),
+                        m_shooter);
+
+        // shooter with network table values
+        new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
+                .whenActive(
+                        () -> m_shooter.setSpeedsRPM(m_nt_shooterTopRpm.getDouble(0), m_nt_shooterBottomRpm.getDouble(0)),
                         m_shooter);
     }
 

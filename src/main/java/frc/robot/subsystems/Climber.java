@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CTREConstants;
 import frc.robot.Constants.ClimberConstants;
@@ -117,6 +118,8 @@ public class Climber extends SubsystemBase {
 
     // init solenoids
     m_solenoid.set(Value.kReverse);
+
+    setDefaultCommand(new RunCommand(() -> armsStop(), this));
   }
 
   @Override
@@ -165,8 +168,6 @@ public class Climber extends SubsystemBase {
     // }
   }
 
-
-
   public void hooksForward() {
     m_solenoid.set(Value.kForward);
   }
@@ -184,12 +185,12 @@ public class Climber extends SubsystemBase {
     return false;
   }
 
-  // Returns the Arm position in inches.  The arms are at zero
-    // when the magnetic senser is actived.  As they extend up,
-    // the position increases.  This number is ONLY valid
-    // if the arms are calibrated.
-    public double getArmPositionInches() {
-      return m_master.getSelectedSensorPosition() * ClimberConstants.kInchesPerEncoderTick_Auto;
+  // Returns the Arm position in inches. The arms are at zero
+  // when the magnetic senser is actived. As they extend up,
+  // the position increases. This number is ONLY valid
+  // if the arms are calibrated.
+  public double getArmPositionInches() {
+    return m_master.getSelectedSensorPosition() * ClimberConstants.kInchesPerEncoderTick_Auto;
   }
 
   public void armsUp() {

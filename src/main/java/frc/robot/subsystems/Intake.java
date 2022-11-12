@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.CTREConstants;
@@ -29,7 +30,8 @@ public class Intake extends SubsystemBase {
 
   public final WPI_TalonFX m_intake = new WPI_TalonFX(IntakeConstants.kIntakeMotorCanId, CTREConstants.kCanivoreName);
   public final WPI_TalonFX m_mover = new WPI_TalonFX(IntakeConstants.kMoverMotorCanId, CTREConstants.kCanivoreName);
-  public final WPI_TalonFX m_shooterLoader = new WPI_TalonFX(LoaderConstants.kLoaderMotorCanId, CTREConstants.kCanivoreName);
+  public final WPI_TalonFX m_shooterLoader = new WPI_TalonFX(LoaderConstants.kLoaderMotorCanId,
+      CTREConstants.kCanivoreName);
 
   public final DoubleSolenoid m_doublePCM = new DoubleSolenoid(PneumaticsModuleType.REVPH,
       IntakeConstants.kIntakePneumatic1, IntakeConstants.kIntakePneumatic2);
@@ -61,7 +63,7 @@ public class Intake extends SubsystemBase {
 
   /** Creates a new Intake. */
   public Intake() {
-    m_colorSensor.init();
+    // m_colorSensor.init();
 
     m_intake.configFactoryDefault(100);
     m_mover.configFactoryDefault(100);
@@ -71,17 +73,17 @@ public class Intake extends SubsystemBase {
     m_mover.setInverted(false);
     m_shooterLoader.setInverted(false);
 
-
     m_intake.setNeutralMode(NeutralMode.Brake);
     m_mover.setNeutralMode(NeutralMode.Brake);
     m_shooterLoader.setNeutralMode(NeutralMode.Brake);
-
 
     // add to shuffleboard
     debugTab.addBoolean("Red Detect", () -> m_colorSensor.isRedBallDetected());
     debugTab.addBoolean("Blue Detect", () -> m_colorSensor.isBlueBallDetected());
 
     m_doublePCM.set(Value.kReverse);
+
+    setDefaultCommand(new RunCommand(() -> changeState(false, false, false), this));
 
   }
 

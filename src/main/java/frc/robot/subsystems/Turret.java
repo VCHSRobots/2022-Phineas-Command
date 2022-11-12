@@ -26,6 +26,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.TurretConstants;
@@ -86,9 +87,11 @@ public class Turret extends SubsystemBase {
     turnTableConfig.reverseSoftLimitThreshold = TurretConstants.kMinAngle * TurretConstants.kEncoderTicksPerDegree;
     // // [deg / s*s] * [ticks / deg] * [s / 100ms] = [tick / (100ms * s)]
     // ticks per 100ms per sec
-    turnTableConfig.motionAcceleration = TurretConstants.kMaxAngularAcceleration * TurretConstants.kEncoderTicksPerDegree * (1.0 / 10.0);
+    turnTableConfig.motionAcceleration = TurretConstants.kMaxAngularAcceleration
+        * TurretConstants.kEncoderTicksPerDegree * (1.0 / 10.0);
     // // [deg / s] * [tick / deg] * [s / 100ms] = [tick / 100ms]
-    turnTableConfig.motionCruiseVelocity = TurretConstants.kMaxAngularVelocity * TurretConstants.kEncoderTicksPerDegree * (1.0 / 10.0);
+    turnTableConfig.motionCruiseVelocity = TurretConstants.kMaxAngularVelocity * TurretConstants.kEncoderTicksPerDegree
+        * (1.0 / 10.0);
     turnTableConfig.motionCurveStrength = 5;
 
     m_turnTableTalon.configFactoryDefault(100);
@@ -128,7 +131,8 @@ public class Turret extends SubsystemBase {
         Thread.sleep(1000);
         if ((m_turntableEncoder.getPosition() - TurretConstants.kZeroOffsetDegrees) < TurretConstants.kMinAngle) {
           m_turntableEncoder.setPosition(m_turntableEncoder.getPosition() + 360, 50);
-        } else if ((m_turntableEncoder.getPosition() - TurretConstants.kZeroOffsetDegrees) > TurretConstants.kMaxAngle) {
+        } else if ((m_turntableEncoder.getPosition()
+            - TurretConstants.kZeroOffsetDegrees) > TurretConstants.kMaxAngle) {
           m_turntableEncoder.setPosition(m_turntableEncoder.getPosition() - 360, 50);
         }
         Thread.sleep(100);
@@ -137,6 +141,8 @@ public class Turret extends SubsystemBase {
 
       }
     }).start();
+
+    setDefaultCommand(new RunCommand(() -> stop(), this));
   }
 
   @Override
@@ -192,5 +198,9 @@ public class Turret extends SubsystemBase {
 
   public double getTurretAngleCANcoder() {
     return m_turntableEncoder.getPosition();
+  }
+
+  public void stop() {
+    m_turnTableTalon.stopMotor();
   }
 }

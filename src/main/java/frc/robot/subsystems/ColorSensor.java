@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.ColorSensorV3;
@@ -69,10 +70,12 @@ public class ColorSensor extends SubsystemBase {
   public static final Color kRedBallColor = new Color(0.445, 0.38, 0.155);
 
   // Robot Init
-  public void init() {
+  public ColorSensor() {
 
     m_colorMatcher.addColorMatch(kBlueBallColor);
     m_colorMatcher.addColorMatch(kRedBallColor);
+
+    setDefaultCommand(new RunCommand(() -> {}, this));
   }
 
   public boolean isBlueBallDetected() {
